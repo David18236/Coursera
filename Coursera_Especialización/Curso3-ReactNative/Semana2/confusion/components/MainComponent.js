@@ -7,6 +7,24 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    fetchDishes: () => dispatch(fetchDishes()),
+    fetchComments: () => dispatch(fetchComments()),
+    fetchPromos: () => dispatch(fetchPromos()),
+    fetchLeaders: () => dispatch(fetchLeaders()),
+})
 
 const AboutNavigator = createStackNavigator({
     About: { screen: About },
@@ -191,6 +209,13 @@ const MainNavigator = createDrawerNavigator({
     });
 
 class Main extends Component {
+    componentDidMount() {
+        this.props.fetchDishes();
+        this.props.fetchComments();
+        this.props.fetchPromos();
+        this.props.fetchLeaders();
+    }
+
     render() {
         return (
             <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
@@ -202,26 +227,26 @@ class Main extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+        flex: 1,
     },
     drawerHeader: {
-      backgroundColor: '#512DA8',
-      height: 140,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 1,
-      flexDirection: 'row'
+        backgroundColor: '#512DA8',
+        height: 140,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'row'
     },
     drawerHeaderText: {
-      color: 'white',
-      fontSize: 24,
-      fontWeight: 'bold'
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold'
     },
     drawerImage: {
-      margin: 10,
-      width: 80,
-      height: 60
+        margin: 10,
+        width: 80,
+        height: 60
     }
-  });
+});
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
