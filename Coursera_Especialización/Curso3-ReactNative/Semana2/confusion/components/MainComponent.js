@@ -6,10 +6,10 @@ import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView 
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
+import Reservation from './ReservationComponent';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
-import Reservation from './ReservationComponent';
 
 const mapStateToProps = state => {
     return {

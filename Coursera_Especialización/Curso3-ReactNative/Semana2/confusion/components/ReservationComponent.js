@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal} from 'react-native';
-import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 
 class Reservation extends Component {
@@ -11,7 +10,8 @@ class Reservation extends Component {
         this.state = {
             guests: 1,
             smoking: false,
-            date: ''
+            date: '',
+            showModal: false
         }
     }
 
@@ -45,7 +45,7 @@ class Reservation extends Component {
                     <Picker
                         style={styles.formItem}
                         selectedValue={this.state.guests}
-                        onValueChange={(itemValue, itemIndex) => this.setState({ guests: itemValue })}>
+                        onValueChange={(itemValue) => this.setState({ guests: itemValue })}>
                         <Picker.Item label="1" value="1" />
                         <Picker.Item label="2" value="2" />
                         <Picker.Item label="3" value="3" />
