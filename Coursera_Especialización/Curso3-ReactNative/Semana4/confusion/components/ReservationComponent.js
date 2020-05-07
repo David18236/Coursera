@@ -6,6 +6,8 @@ import * as Animatable from 'react-native-animatable';
 
 import * as Permissions from 'expo-permissions';
 
+import * as Calendar from 'expo-calendar';
+
 import { Notifications } from 'expo';
 
 class Reservation extends Component {
@@ -31,7 +33,7 @@ class Reservation extends Component {
 
     handleReservation() {
         this.presentLocalNotification(this.state.date)
-        //this.toggleModal();
+        this.addReservationToCalendar(this.state.date)
     }
 
     resetForm() {
@@ -81,6 +83,97 @@ class Reservation extends Component {
                 vibrate: true,
                 color: '#512DA8'
             }
+        });
+    }
+
+    async obtainCalendarPermission() {
+        let permission = await Permissions.getAsync(Permissions.CALENDAR);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.CALENDAR);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to use calendar');
+            }
+        }
+        return permission;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------------
+    async getAndroidCal() {
+        var androidCalendar
+        var foundCal = false
+        // retrieve internal calendars
+        var androidCalendars = await Calendar.getCalendarsAsync();
+        // iterate through them
+        for (var x = 0; x < androidCalendars.length; x++) {
+            // check each to see if their source name matches what you have
+            if (androidCalendars[x]["source"]["name"] == "*your identifier*") {
+                foundCal = true
+                // save the calendar id and stop searching
+                androidCalendar = androidCalendars[x]["id"]
+                break
+            }
+        }
+        // initial run
+        if (foundCal === false) {
+            androidCalendar = await createCalendar()
+        }
+        return androidCalendar
+    }
+
+
+    //  create a calendar for android 
+    async createCalendar() {
+        const newCalendarSource = {
+            isLocalAccount: true,
+            name: '*your identifier*'
+        }
+
+        const newCalendarID = await Calendar.createCalendarAsync({
+            title: * your title*,
+            color: * your color*,
+            entityType: Calendar.EntityTypes.EVENT,
+            sourceId: newCalendarSource.id,
+            source: newCalendarSource,
+            name: * calendar name*,
+            ownerAccount: 'personal',
+            accessLevel: Calendar.CalendarAccessLevel.OWNER,
+        });
+
+        return newCalendarID
+    }
+    //------------------------------------------------------------------------------------------------------------------------
+
+    //async getDefaultCalendarSource() {
+    //    const calendars = await Calendar.getCalendarsAsync();
+    //    const defaultCalendars = calendars.filter(each => each.source.name === 'Default');
+    //    return defaultCalendars[0].source;
+    //}
+
+    async addReservationToCalendar(date) {
+        await this.obtainCalendarPermission();
+        //await this.getDefaultCalendarSource();
+
+        Notifications.presentLocalNotificationAsync({
+            title: 'Con Fusion Table Reservation',
+            body: 'Reservation for ' + date + ' requested',
+            ios: {
+                sound: true
+            },
+            android: {
+                sound: true,
+                vibrate: true,
+                color: '#512DA8'
+            }
+        });
+
+        Calendar.createCalendarAsync(null, {
+            title: "Con Fusion Table Reservation",
+            color: '#512DA8',
+            name: 'Your Reservation',
+            startDate: new Date(Date.parse(date)),
+            endDate: new Date(Date.parse(date) + 2 * 60 * 60 * 1000),
+            timeZone: 'Asia/Hong_Kong',
+            location: '121, Clear Water Bay Road, Kowloon, Hong Kong'
         });
     }
 
@@ -141,7 +234,6 @@ class Reservation extends Component {
 
                     <View style={styles.formRow}>
                         <Button
-                            //onPress={() => this.handleReservation()}
                             onPress={() => this.showAlert()}
                             title="Reserve"
                             color="#512DA8"

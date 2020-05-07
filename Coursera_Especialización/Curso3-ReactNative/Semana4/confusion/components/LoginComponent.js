@@ -148,7 +148,6 @@ class RegisterTab extends Component {
                 this.setState({ imageUrl: capturedImage.uri });
             }
         }
-
     }
 
     getImageFromGallery = async () => {
@@ -163,8 +162,6 @@ class RegisterTab extends Component {
             console.log(capturedImage);
             this.setState({ imageUrl: capturedImage.uri });
         }
-
-
     }
 
     static navigationOptions = {
