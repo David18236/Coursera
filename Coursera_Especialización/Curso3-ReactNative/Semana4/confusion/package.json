@@ -9,7 +9,13 @@
   },
   "dependencies": {
     "expo": "~37.0.3",
+<<<<<<< HEAD
+    "expo-asset": "~8.1.4",
+    "expo-camera": "~8.2.0",
+    "expo-image-manipulator": "~8.1.0",
     "expo-image-picker": "~8.1.0",
+=======
+>>>>>>> parent of d93d515... Module Picking An Image Completed
     "expo-mail-composer": "~8.1.0",
     "expo-secure-store": "~8.1.0",
     "react": "~16.9.0",

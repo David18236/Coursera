@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import { Card, Icon, Input, CheckBox } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
-import * as Permissions from 'expo-permissions';
-import * as ImagePicker from 'expo-image-picker';
-import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
-import { Input, CheckBox, Button, Icon } from 'react-native-elements';
-import { createBottomTabNavigator } from 'react-navigation';
-import { baseUrl } from '../shared/baseUrl';
 
-class LoginTab extends Component {
+class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -33,14 +29,6 @@ class LoginTab extends Component {
 
     static navigationOptions = {
         title: 'Login',
-        tabBarIcon: ({ tintColor }) => (
-            <Icon
-                name='sign-in'
-                type='font-awesome'
-                size={24}
-                iconStyle={{ color: tintColor }}
-            />
-        )
     };
 
     handleLogin() {
@@ -51,6 +39,7 @@ class LoginTab extends Component {
         else
             SecureStore.deleteItemAsync('userinfo')
                 .catch((error) => console.log('Could not delete user info', error));
+
     }
 
     render() {
@@ -83,30 +72,13 @@ class LoginTab extends Component {
                         color="#512DA8"
                     />
                 </View>
-                <View style={styles.formButton}>
-                    <Button
-                        onPress={() => this.props.navigation.navigate('Register')}
-                        title="Register"
-                        clear
-                        icon={
-                            <Icon
-                                name='user-plus'
-                                type='font-awesome'
-                                size={24}
-                                color='blue'
-                            />
-                        }
-                        titleStyle={{
-                            color: "blue"
-                        }}
-                    />
-                </View>
             </View>
         );
     }
 
 }
 
+<<<<<<< HEAD
 class RegisterTab extends Component {
 
     constructor(props) {
@@ -134,7 +106,7 @@ class RegisterTab extends Component {
             });
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
-                this.setState({ imageUrl: capturedImage.uri });
+                this.processImage(capturedImage.uri);
             }
         }
 
@@ -238,42 +210,22 @@ class RegisterTab extends Component {
     }
 }
 
+=======
+>>>>>>> parent of d93d515... Module Picking An Image Completed
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         margin: 20,
     },
-    imageContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        margin: 20
-    },
-    image: {
-        margin: 10,
-        width: 80,
-        height: 60
-    },
     formInput: {
-        margin: 20
+        margin: 40
     },
     formCheckbox: {
-        margin: 20,
+        margin: 40,
         backgroundColor: null
     },
     formButton: {
         margin: 60
-    }
-});
-
-const Login = createBottomTabNavigator({
-    Login: LoginTab,
-    Register: RegisterTab
-}, {
-    tabBarOptions: {
-        activeBackgroundColor: '#9575CD',
-        inactiveBackgroundColor: '#D1C4E9',
-        activeTintColor: '#ffffff',
-        inactiveTintColor: 'gray'
     }
 });
 
