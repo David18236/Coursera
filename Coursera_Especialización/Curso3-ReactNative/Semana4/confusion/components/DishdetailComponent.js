@@ -121,7 +121,7 @@ function RenderDish(props) {
                             type='font-awesome'
                             color='#51D2A8'
                             style={styles.cardItem}
-                            onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)} 
+                            onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)}
                         />
                     </View>
                 </Card>
