@@ -30,8 +30,8 @@ favoriteRouter.route('/')
             .then((favorite) => {
                 if (favorite) {
                     for (var i = 0; i < req.body.length; i++) {
-                        if (favorite.dishes.indexOf(req.body[i]._id) === -1) {
-                            favorite.dishes.push(req.body[i]);
+                        if (favorite.dishes.id(req.body[i]._id) === null) {
+                            favorite.dishes.push(req.body[i]._id);
                         }
                     }
                     favorite.save();
@@ -42,7 +42,7 @@ favoriteRouter.route('/')
                         .then((favorite) => {
                             favorite.dishes.push({ "_id": req.params.dishId });
                             for (i = 0; 1 < req.body.length; i++) {
-                                if (favorite.dishes.indexOf(req.body[i]._id) < 0) {
+                                if (favorite.dishes.id(req.body[i]._id) === null) {
                                     favorite.dishes.push({ "_id": req.body[i]._id });
                                 }
                             }
@@ -92,7 +92,7 @@ favoriteRouter.route('/:dishId')
         Favorites.findOne({ 'user': userId })
             .then((favorite) => {
                 if (favorite) {
-                    if (favorite.dishes.indexOf(req.params.dishId) === -1) {
+                    if (favorite.dishes.id(req.params.dishId) === null) {
                         favorite.dishes.push(req.params.dishId);
                     }
 
