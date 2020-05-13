@@ -97,84 +97,23 @@ class Reservation extends Component {
         return permission;
     }
 
-    //------------------------------------------------------------------------------------------------------------------------
-    async getAndroidCal() {
-        var androidCalendar
-        var foundCal = false
-        // retrieve internal calendars
-        var androidCalendars = await Calendar.getCalendarsAsync();
-        // iterate through them
-        for (var x = 0; x < androidCalendars.length; x++) {
-            // check each to see if their source name matches what you have
-            if (androidCalendars[x]["source"]["name"] == "*your identifier*") {
-                foundCal = true
-                // save the calendar id and stop searching
-                androidCalendar = androidCalendars[x]["id"]
-                break
-            }
-        }
-        // initial run
-        if (foundCal === false) {
-            androidCalendar = await createCalendar()
-        }
-        return androidCalendar
-    }
-
-
-    //  create a calendar for android 
-    async createCalendar() {
-        const newCalendarSource = {
-            isLocalAccount: true,
-            name: '*your identifier*'
-        }
-
-        const newCalendarID = await Calendar.createCalendarAsync({
-            title: * your title*,
-            color: * your color*,
-            entityType: Calendar.EntityTypes.EVENT,
-            sourceId: newCalendarSource.id,
-            source: newCalendarSource,
-            name: * calendar name*,
-            ownerAccount: 'personal',
-            accessLevel: Calendar.CalendarAccessLevel.OWNER,
-        });
-
-        return newCalendarID
-    }
-    //------------------------------------------------------------------------------------------------------------------------
-
-    //async getDefaultCalendarSource() {
-    //    const calendars = await Calendar.getCalendarsAsync();
-    //    const defaultCalendars = calendars.filter(each => each.source.name === 'Default');
-    //    return defaultCalendars[0].source;
-    //}
-
     async addReservationToCalendar(date) {
-        await this.obtainCalendarPermission();
-        //await this.getDefaultCalendarSource();
+        const D = new Date(Date.parse(date));
+        const E = new Date(Date.parse(date));
+        E.setTime(E.getTime() + (60 * 60 * 1000));
+        let response = await this.obtainNotificationPermission();
 
-        Notifications.presentLocalNotificationAsync({
-            title: 'Con Fusion Table Reservation',
-            body: 'Reservation for ' + date + ' requested',
-            ios: {
-                sound: true
-            },
-            android: {
-                sound: true,
-                vibrate: true,
-                color: '#512DA8'
-            }
-        });
-
-        Calendar.createCalendarAsync(null, {
-            title: "Con Fusion Table Reservation",
-            color: '#512DA8',
-            name: 'Your Reservation',
-            startDate: new Date(Date.parse(date)),
-            endDate: new Date(Date.parse(date) + 2 * 60 * 60 * 1000),
-            timeZone: 'Asia/Hong_Kong',
-            location: '121, Clear Water Bay Road, Kowloon, Hong Kong'
-        });
+        if (response.status === "granted") {
+            await Calendar.createEventAsync("1", {
+                title: 'Con Fusion Table Reservation',
+                startDate: D,
+                endDate: E,
+                timeZone: 'Asia/Hong_Kong',
+                location: '121, Clear Water Bay Road, Clear Water Bay, Kowloon, Hong Kong',
+            })
+                .then(Mess => console.log(Mess))
+                .catch(error => console.log(error));
+        }
     }
 
     render() {
