@@ -64,12 +64,16 @@
 
         <img matListAvatar src={{leader.image}} alt={{leader.image}}>
         <h3 matLine> {{leader.name}} {{leader.abbr}} </h3>
-        <p matLine> 
-          <span matLine> {{leader.designation}} </span>  
+        <p matLine>
+          <span matLine> {{leader.designation}} </span>
           <span matLine> {{leader.description}} </span>
         </p>
-        
       </mat-list-item>
     </mat-list>
+
+    <div [hidden]="leaders">
+      <mat-spinner></mat-spinner>
+      <h4>Loading . . . Please Wait</h4>
+    </div>
   </div>
 </div>
