@@ -1,4 +1,5 @@
-<div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+<div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+  fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
   <div fxFlex="40" *ngIf="dish">
     <mat-card>
       <mat-card-header>
@@ -61,13 +62,19 @@
             <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
           </mat-form-field>
         </p>
-        <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="!commentForm.valid">Submit</button>
+        <button type="submit" mat-button class="background-primary text-floral-white"
+          [disabled]="!commentForm.valid">Submit</button>
       </form>
     </div>
   </div>
 
-  <div [hidden]="dish">
+  <div fxFlex [hidden]="dish || errMess">
     <mat-spinner></mat-spinner>
     <h4>Loading . . . Please Wait</h4>
+  </div>
+
+  <div fxFlex *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
   </div>
 </div>
