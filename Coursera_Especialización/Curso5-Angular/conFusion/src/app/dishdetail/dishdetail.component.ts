@@ -9,14 +9,13 @@ import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { switchMap } from 'rxjs/operators';
-import { visibility } from '../animations/app.animation';
-import { flyInOut } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
-  animations: [visibility()],
+  animations: [visibility(), flyInOut(), expand()],
   host: { '[@flyInOut]': 'true', 'style': 'display: block;' },
 })
 
