@@ -50,11 +50,21 @@ export class DishdetailComponent implements OnInit {
   };
 
   constructor(
-    private dishservice: DishService,
+    private dishService: DishService,
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
-    @Inject('BaseURL') private BaseURL) { }
+    @Inject('BaseURL') private BaseURL
+  ) { }
+
+  ngOnInit() {
+    this.createForm();
+
+    this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+    this.route.params.pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDish(params['id']); }))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
+        errmess => this.errMess = <any>errmess);
+  }
 
   createForm() {
     this.commentForm = this.fb.group({
@@ -94,7 +104,7 @@ export class DishdetailComponent implements OnInit {
     var d = new Date();
     this.comment.date = d.toISOString();
     this.dishcopy.comments.push(this.comment);
-    this.dishservice.putDish(this.dishcopy).subscribe(dish => { this.dish = dish; this.dishcopy = dish; },
+    this.dishService.putDish(this.dishcopy).subscribe(dish => { this.dish = dish; this.dishcopy = dish; },
       errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
     console.log(this.comment);
     this.commentForm.reset({
@@ -104,22 +114,11 @@ export class DishdetailComponent implements OnInit {
     this.commentFormDirective.resetForm({ rating: 5 });
   }
 
-  ngOnInit() {
-    this.createForm();
-
-    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params.pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishservice.getDish(+params['id']); }))
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
-        errmess => this.errMess = <any>errmess);
-  }
-
   setPrevNext(dishId: string) {
     const index = this.dishIds.indexOf(dishId);
     this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
     this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
   }
-
-
 
   goBack(): void {
     this.location.back();
