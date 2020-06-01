@@ -10,7 +10,6 @@ import { flyInOut, expand } from '../animations/app.animation';
   styleUrls: ['./contact.component.scss'],
   host: { '[@flyInOut]': 'true', 'style': 'display: block;' },
   animations: [flyInOut(), expand()]
-
 })
 
 export class ContactComponent implements OnInit {
@@ -20,7 +19,10 @@ export class ContactComponent implements OnInit {
   feedback: Feedback;
   contactType = ContactType;
   errMess: string;
-  submitted: boolean;
+  visibility = 'shown';
+  spinnerVisibility: boolean;
+  formVisibility: boolean;
+  feedbackVisibility: boolean;
 
   formErrors = {
     'firstname': '',
@@ -58,8 +60,12 @@ export class ContactComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private feedbackService: FeedbackService,
-    @Inject('BaseURL') private BaseURL
-  ) { this.createForm(); }
+    @Inject('BaseURL') private BaseURL) {
+    this.createForm();
+    this.formVisibility = false;
+    this.spinnerVisibility = false;
+    this.feedbackVisibility = false;
+  }
 
   ngOnInit() {
   }
@@ -81,12 +87,37 @@ export class ContactComponent implements OnInit {
     this.onValueChanged(); // (re)set validation messages now
   }
 
+  switchForm() {
+    this.formVisibility = !this.formVisibility;
+  }
+
+  switchSpinner() {
+    this.spinnerVisibility = !this.spinnerVisibility;
+  }
+
+  switchFeedback() {
+    this.feedbackVisibility = !this.feedbackVisibility;
+  }
+
   onSubmit() {
-    this.submitted = false;
     this.feedback = this.feedbackForm.value;
+    this.switchForm();
+    this.switchSpinner();
+
+    this.feedbackService.submitFeedback(this.feedback).subscribe(feedback => {
+      this.feedback = feedback;
+      this.switchSpinner();
+      this.switchFeedback();
+      setTimeout(() => {
+        this.switchFeedback();
+        this.switchForm();
+      }, 5000);
+    },
+      errmess => { this.feedback = null; this.feedback = null; this.errMess = <any>errmess; }
+    );
+
     console.log(this.feedback);
-    this.feedbackService.submitFeedback(this.feedback).subscribe(feedback => { this.feedback = feedback; },
-      errmess => { this.feedback = null; this.errMess = <any>errmess;});
+
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -119,3 +150,4 @@ export class ContactComponent implements OnInit {
     }
   }
 }
+

@@ -15,8 +15,8 @@ import { visibility, flyInOut, expand } from '../animations/app.animation';
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
-  animations: [visibility(), flyInOut(), expand()],
   host: { '[@flyInOut]': 'true', 'style': 'display: block;' },
+  animations: [visibility(), flyInOut(), expand()]
 })
 
 export class DishdetailComponent implements OnInit {

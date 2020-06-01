@@ -43,7 +43,7 @@
 
     <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
 
-    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()" [hidden]= "formVisibility" @expand>
       <p>
         <mat-form-field class="half-width">
           <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
@@ -73,8 +73,7 @@
       </p>
 
       <p>
-        <mat-slide-toggle formControlName="agree" class="half-width" justify-content="center">May we contact you?
-        </mat-slide-toggle>
+        <mat-slide-toggle formControlName="agree" class="half-width" justify-content="center">May we contact you? </mat-slide-toggle>
 
         &nbsp;&nbsp;&nbsp;
 
@@ -92,16 +91,15 @@
         </mat-form-field>
       </p>
 
-      <button type="submit" mat-button class="background-primary text-floral-white"
-        [disabled]="!feedbackForm.valid">Submit</button>
+      <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="!feedbackForm.valid">Submit</button>
     </form>
   </div>
 
-  <div fxFlex [hidden]= "feedback || errMess">
+  <div fxFlex [hidden]= "!spinnerVisibility">
     <mat-spinner></mat-spinner>
   </div>
 
-  <div fxflex *ngIf="feedback">
+  <div fxflex *ngIf="feedback" [hidden]= "!feedbackVisibility" @expand>
     <mat-list>
       <h3>Your Submission</h3>
       <mat-list-item>
