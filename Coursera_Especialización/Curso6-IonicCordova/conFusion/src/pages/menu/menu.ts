@@ -9,13 +9,14 @@ import { DishdetailPage } from '../dishdetail/dishdetail';
   selector: 'page-menu',
   templateUrl: 'menu.html',
 })
+
 export class MenuPage implements OnInit {
   dishes: Dish[];
   errMess: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private dishservice: DishProvider,
-    @Inject('BaseURL') private BaseURL) { }
+    @Inject('BaseURL') public BaseURL) { }
 
   ngOnInit() {
     this.dishservice.getDishes()
