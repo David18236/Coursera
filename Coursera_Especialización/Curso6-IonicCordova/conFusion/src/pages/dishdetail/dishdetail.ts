@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Dish } from '../../shared/dish';
+import { FavoriteProvider } from '../../providers/favorite/favorite';
 
 @IonicPage()
 @Component({
@@ -12,17 +13,28 @@ export class DishdetailPage {
   errMess: string;
   avgstars: string;
   numcomments: number;
+  favorite: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    @Inject('BaseURL') public BaseURL) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    @Inject('BaseURL') public BaseURL, 
+    private favoriteservice: FavoriteProvider) {
+
     this.dish = navParams.get('dish');
+    this.favorite = favoriteservice.isFavorite(this.dish.id);
     this.numcomments = this.dish.comments.length;
     let total = 0;
-    this.dish.comments.forEach(comment => total += comment.rating );
-    this.avgstars = (total/this.numcomments).toFixed(2);
+    this.dish.comments.forEach(comment => total += comment.rating);
+    this.avgstars = (total / this.numcomments).toFixed(2);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DishdetailPage');
+  }
+
+  addToFavorites() {
+    console.log('Adding to Favorites', this.dish.id);
+    this.favorite = this.favoriteservice.addFavorite(this.dish.id);
   }
 }
