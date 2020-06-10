@@ -8,6 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import { MenuPage } from '../pages/menu/menu';
 import { ContactPage } from '../pages/contact/contact';
 import { DishdetailPage } from '../pages/dishdetail/dishdetail';
+import { FavoritesPage } from '../pages/favorites/favorites';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,22 +28,28 @@ import { FavoriteProvider } from '../providers/favorite/favorite';
     AboutPage,
     MenuPage,
     ContactPage,
-    DishdetailPage
+    DishdetailPage,
+    FavoritesPage
   ],
+
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule
   ],
+
   bootstrap: [IonicApp],
+
   entryComponents: [
     MyApp,
     HomePage,
     AboutPage,
     MenuPage,
     ContactPage,
-    DishdetailPage
+    DishdetailPage,
+    FavoritesPage
   ],
+
   providers: [
     StatusBar,
     SplashScreen,
