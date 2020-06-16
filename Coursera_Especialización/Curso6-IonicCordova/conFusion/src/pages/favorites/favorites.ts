@@ -69,3 +69,4 @@ export class FavoritesPage implements OnInit {
     item.close();
   }
 }
+

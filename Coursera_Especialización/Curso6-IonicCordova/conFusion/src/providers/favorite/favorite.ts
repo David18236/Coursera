@@ -11,7 +11,7 @@ export class FavoriteProvider {
 
   constructor(public http: HttpClient, public dishservice: DishProvider) {
     console.log('Hello FavoriteProvider Provider');
-    this.favorites = [];
+    this.favorites = []; 
   }
 
   addFavorite(id: number): boolean {
