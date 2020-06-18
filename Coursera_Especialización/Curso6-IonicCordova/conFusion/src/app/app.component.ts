@@ -10,7 +10,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { ContactPage } from '../pages/contact/contact';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { ReservationPage } from '../pages/reservation/reservation';
-/*import { CommentPage } from '../pages/comment/comment';*/
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,11 +20,11 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, icon: string, component: any}>;
+  pages: Array<{ title: string, icon: string, component: any }>;
 
   constructor(
-    public platform: Platform, 
-    public statusBar: StatusBar, 
+    public platform: Platform,
+    public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public modalCtrl: ModalController) {
     this.initializeApp();
@@ -34,7 +34,7 @@ export class MyApp {
       { title: 'About Us', icon: 'information-circle', component: AboutPage },
       { title: 'Menu', icon: 'list-box', component: MenuPage },
       { title: 'Contact Us', icon: 'contact', component: ContactPage },
-      { title: 'My Favorites', icon: 'heart', component: FavoritesPage },        
+      { title: 'My Favorites', icon: 'heart', component: FavoritesPage },
     ];
   }
 
@@ -55,6 +55,11 @@ export class MyApp {
 
   openReserve() {
     let modal = this.modalCtrl.create(ReservationPage);
+    modal.present();
+  }
+
+  openLogin() {
+    let modal = this.modalCtrl.create(LoginPage);
     modal.present();
   }
 }
