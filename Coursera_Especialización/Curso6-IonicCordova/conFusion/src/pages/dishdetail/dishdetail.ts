@@ -10,6 +10,7 @@ import { CommentPage } from '../comment/comment';
   selector: 'page-dishdetail',
   templateUrl: 'dishdetail.html',
 })
+
 export class DishdetailPage {
   dish: Dish;
   errMess: string;
