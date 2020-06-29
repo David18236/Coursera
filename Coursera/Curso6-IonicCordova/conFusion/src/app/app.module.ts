@@ -10,14 +10,16 @@ import { MenuPage } from '../pages/menu/menu';
 import { ContactPage } from '../pages/contact/contact';
 import { DishdetailPage } from '../pages/dishdetail/dishdetail';
 import { FavoritesPage } from '../pages/favorites/favorites';
-import { SocialSharing } from '@ionic-native/social-sharing';
 import { ReservationPage } from '../pages/reservation/reservation';
 import { CommentPage } from '../pages/comment/comment';
 import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { Camera } from '@ionic-native/camera';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { DishProvider } from '../providers/dish/dish';
 import { LeaderProvider } from '../providers/leader/leader';
@@ -39,7 +41,8 @@ import { FavoriteProvider } from '../providers/favorite/favorite';
     FavoritesPage,
     ReservationPage,
     CommentPage,
-    LoginPage
+    LoginPage,
+    RegisterPage
   ],
 
   imports: [
@@ -61,7 +64,8 @@ import { FavoriteProvider } from '../providers/favorite/favorite';
     FavoritesPage,
     ReservationPage,
     CommentPage,
-    LoginPage
+    LoginPage,
+    RegisterPage
   ],
 
   providers: [
@@ -70,6 +74,7 @@ import { FavoriteProvider } from '../providers/favorite/favorite';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     LocalNotifications,
     EmailComposer,
+    Camera,
     SocialSharing,
     DishProvider,
     LeaderProvider,

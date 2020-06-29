@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { User } from '../../shared/user';
+import { RegisterPage } from '../register/register';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,8 @@ export class LoginPage {
     public navParams: NavParams,
     public viewCtrl: ViewController,
     private formBuilder: FormBuilder,
-    private storage: Storage) {
+    private storage: Storage,
+    private modalCtrl: ModalController) {
 
     storage.get('user').then(user => {
       if (user) {
@@ -61,5 +63,11 @@ export class LoginPage {
     else
       this.storage.remove('user');
     this.viewCtrl.dismiss();
+  }
+
+  openRegister() {
+    let modal = this.modalCtrl.create(RegisterPage);
+    modal.present();
+    modal.onDidDismiss(() => this.dismiss())
   }
 }
