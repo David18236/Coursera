@@ -20,6 +20,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Camera } from '@ionic-native/camera';
+import { Network } from '@ionic-native/network';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { DishProvider } from '../providers/dish/dish';
 import { LeaderProvider } from '../providers/leader/leader';
@@ -75,6 +76,7 @@ import { FavoriteProvider } from '../providers/favorite/favorite';
     LocalNotifications,
     EmailComposer,
     Camera,
+    Network,
     SocialSharing,
     DishProvider,
     LeaderProvider,
