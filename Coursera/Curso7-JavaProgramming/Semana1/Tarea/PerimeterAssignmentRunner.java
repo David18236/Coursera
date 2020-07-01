@@ -57,7 +57,7 @@ public class PerimeterAssignmentRunner {
         for (Point currPt : s.getPoints()) {
             // Find distance from prevPt point to currPt 
             double currDist = prevPt.distance(currPt);
-            System.out.println(df.format(currDist));
+            //System.out.println(df.format(currDist));
             //Compara la anterior distancia con la actual
             if (largestSide < currDist) {
                 //Si la actual es mayor a la anterior toma su lugar como el lado más largo
@@ -91,14 +91,19 @@ public class PerimeterAssignmentRunner {
         DecimalFormat df = new DecimalFormat("#.##");
         FileResource fr = new FileResource();
         Shape s = new Shape(fr);
+
         double length = getPerimeter(s);
-        System.out.println("perimeter = " + df.format(length));
+        System.out.println("perimeter = " + df.format(length) + " " + length);
+        
         int numPoints = getNumPoints(s);
         System.out.println("numPoints = " + numPoints);
+
         double averageLength = getAverageLength(s);
-        System.out.println("averageLength = " + df.format(averageLength));
+        System.out.println("averageLength = " + df.format(averageLength) + " " + averageLength);
+
         double largestSide = getLargestSide(s);
-        System.out.println("largestSide = " + df.format(largestSide));
+        System.out.println("largestSide = " + df.format(largestSide) + " " + largestSide);
+
         double largestX = getLargestX(s);
         System.out.println("largestX = " + largestX);
     }
@@ -128,7 +133,7 @@ public class PerimeterAssignmentRunner {
         //printFileNames();
         DecimalFormat df = new DecimalFormat("#.##");
         double largestPerimeter = getLargestPerimeterMultipleFiles();
-        System.out.println("largestPerimeter = " + df.format(largestPerimeter));
+        System.out.println("largestPerimeter = " + df.format(largestPerimeter) + " " + largestPerimeter);
     }
 
     public String getFileWithLargestPerimeter() {
